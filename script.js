@@ -1,7 +1,7 @@
 canvas = document.querySelector(".canvas");
 ctx = canvas.getContext("2d");
 let angle = Math.PI/4;
-let dangle = Math.PI/180;
+let dangle = (Math.PI/180);
 let signal = 1;
 
 function vector (length, tailX, tailY) {
@@ -22,6 +22,43 @@ function draw(){
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    ctx.beginPath();
+    ctx.moveTo(0,50);
+    ctx.lineTo(canvas.width, 50);
+    ctx.lineWidth = 10;
+    ctx.stroke();
+
+    ctx.fillStyle = 'black';
+    ctx.font = "30px Arial";
+    ctx.fillText("Forças que atuam num balde com água preso a uma corda girando",0,30);
+
+    ctx.font = "27px Arial";
+    ctx.fillStyle = 'green';
+    ctx.fillText("Pr ", 10, 80);
+    ctx.fillStyle = 'red';
+    ctx.fillText("P ", 10, 105);
+    ctx.fillStyle = 'purple';
+    ctx.fillText("Fc ", 10, 130);
+    ctx.fillStyle = 'red';
+    ctx.fillText("T ", 10, 155);
+
+    ctx.fillStyle = 'black';
+    ctx.fillText(": Componente radial da força peso", 45, 80);
+    ctx.fillText(": Força peso", 45, 105);
+    ctx.fillText(": Força centrípeta", 45, 130);
+    ctx.fillText(": Tensão na corda", 45, 155);
+
+    ctx.fillText("Fc = T + Pr", 10, 185);
+    ctx.fillText("Fc = mv²/R", 10, 210);
+    ctx.fillText("Pr = mgcosθ", 10, 235);
+
+    ctx.font = "27px Arial";
+    ctx.fillText("θ: menor ângulo entre P e T", 560, 80);
+    ctx.fillText("R: raio da trajetória", 650, 105);
+    ctx.fillText("g: acel. da gravidade", 650, 130);
+    ctx.fillText("v: velocidade", 700, 155);
+    ctx.fillText("m: massa ", 700, 180);
+
     ctx.save();
 
     //string
@@ -31,7 +68,7 @@ function draw(){
     ctx.moveTo(0,0);
     ctx.lineTo(0,350-bucket.height-bucket.topR);
     ctx.strokeStyle = 'orange';
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 10;
     ctx.stroke();
 
     //water
@@ -99,7 +136,17 @@ function draw(){
     ctx.stroke();
 
     ctx.save();
+    //centripetal force's label
+    ctx.translate(-30, 350-centripetalForce.length-25)
+    // ctx.rotate(-angle);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = 'purple';
+    ctx.fillText("→",-15, -5);
+    ctx.fillText("Fc",-10, 15);
+    ctx.restore();
 
+//----------------------------------------------------
+    ctx.save();
     //weight
     const weight = vector(90, 0, 0);
     ctx.translate(0,350);
@@ -119,7 +166,29 @@ function draw(){
     ctx.lineTo(20*Math.cos(-Math.PI/2+Math.PI/6), weight.length+20*Math.sin(-Math.PI/2+Math.PI/6));
     ctx.stroke();
 
+    //weight's label
+    ctx.fillStyle = 'blue';
+    ctx.font = "30px Arial";
+    ctx.fillText("→", -5,weight.length+15);
+    ctx.fillText("P", 0,weight.length+35);
+
+    //weight radial component's head
+    ctx.fillStyle = 'green';
+    ctx.fillText("→", -65,weight.length+5);
+    ctx.fillText("Pr", -60,weight.length+25);
+
+    ctx.save();
+    let dashedLineLength = weight.length*Math.cos(Math.PI/2-angle);
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.setLineDash([5, 5]);
+    ctx.moveTo(0,weight.length);
+    ctx.lineTo(dashedLineLength*Math.cos(-Math.PI+angle), weight.length +dashedLineLength*Math.sin(-Math.PI+angle));
+    ctx.stroke();
     ctx.restore();
+
+    ctx.restore();
+//-------------------------------------------------------
 
     //weight radial component
     const weightRadial = vector(weight.length*Math.cos(angle),0,0);
@@ -149,21 +218,27 @@ function draw(){
         ctx.stroke();
     }
 
-    //tesion
-    const tesion = vector(centripetalForce.length - weightRadial.length,0,0);
+    //tension
+    const tension = vector(centripetalForce.length - weightRadial.length,0,0);
     ctx.beginPath();
     ctx.moveTo(0,350);
-    ctx.lineTo(0, 350-tesion.length);
+    ctx.lineTo(0, 350-tension.length);
     ctx.strokeStyle = 'red';
     ctx.stroke();
 
     //tension's head
     ctx.beginPath();
-    ctx.moveTo(0, 350-tesion.length);
-    ctx.lineTo(20*Math.cos(Math.PI/2-Math.PI/6), 350-tesion.length+20*Math.sin(Math.PI/2-Math.PI/6));
-    ctx.moveTo(0, 350-tesion.length);
-    ctx.lineTo(20*Math.cos(Math.PI/2+Math.PI/6), 350-tesion.length+20*Math.sin(Math.PI/2+Math.PI/6));
+    ctx.moveTo(0, 350-tension.length);
+    ctx.lineTo(20*Math.cos(Math.PI/2-Math.PI/6), 350-tension.length+20*Math.sin(Math.PI/2-Math.PI/6));
+    ctx.moveTo(0, 350-tension.length);
+    ctx.lineTo(20*Math.cos(Math.PI/2+Math.PI/6), 350-tension.length+20*Math.sin(Math.PI/2+Math.PI/6));
     ctx.stroke();
+
+    //tension force's label
+    ctx.fillStyle = 'red';
+    ctx.font = "30px Arial";
+    ctx.fillText("→", 15, 150);
+    ctx.fillText("T", 20, 170);
 
     ctx.restore();
 
