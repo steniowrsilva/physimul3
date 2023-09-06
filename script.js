@@ -35,7 +35,7 @@ function draw(){
     ctx.font = "27px Arial";
     ctx.fillStyle = 'green';
     ctx.fillText("Pr ", 10, 80);
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'blue';
     ctx.fillText("P ", 10, 105);
     ctx.fillStyle = 'purple';
     ctx.fillText("Fc ", 10, 130);
@@ -219,7 +219,7 @@ function draw(){
     }
 
     //tension
-    const tension = vector(centripetalForce.length - weightRadial.length,0,0);
+    const tension = vector(centripetalForce.length + weightRadial.length,0,0);
     ctx.beginPath();
     ctx.moveTo(0,350);
     ctx.lineTo(0, 350-tension.length);
