@@ -1,5 +1,9 @@
 canvas = document.querySelector(".canvas");
 ctx = canvas.getContext("2d");
+
+const button1 = document.querySelector('#button1');
+const button2 = document.querySelector('#button2');
+
 let angle = Math.PI/4;
 let dangle = (Math.PI/180);
 let signal = 1;
@@ -242,17 +246,27 @@ function draw(){
 
     ctx.restore();
 
-    //PARA UM FUTURO PÊNDULO OU SIMULAÇÃO SIMILAR
-    // const tolerance = 1e-10; // A small value to consider as close to zero
-    // const diff = Math.sqrt(2)/2 - Math.cos(angle);
-    // if (Math.abs(diff) < tolerance) {
-    //     dangle *= -1;
-    // }
-
-    angle -= dangle;
-
-    requestAnimationFrame(draw);
 }
 
-draw();
+let paused = false;
+
+function update() {
+    angle -= dangle;
+    draw();
+    if (paused==false) {
+        requestAnimationFrame(update);
+    }
+    
+}
+
+button2.addEventListener('click', function(event){
+    if (paused==true) {
+        paused = false;
+        update();
+    } else {
+        paused = true;
+    }
+})
+
+update();
 

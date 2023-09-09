@@ -9,3 +9,10 @@ body{
     margin-left: 10px;
     margin-top: 10px;
 }
+
+.button {
+    --button-width: 100px;
+    width: var(--button-width);
+    height: var(--button-width/2);
+    background-color: aqua;
+}
