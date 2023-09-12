@@ -54,7 +54,7 @@ function draw(){
 
     ctx.fillText("Fc = T + Pr", 10, 185);
     ctx.fillText("Fc = mv²/R", 10, 210);
-    ctx.fillText("Pr = mgcosθ", 10, 235);
+    ctx.fillText("Pr = -mgcosθ", 10, 235);
 
     ctx.font = "27px Arial";
     ctx.fillText("θ: menor ângulo entre P e T", 560, 80);
